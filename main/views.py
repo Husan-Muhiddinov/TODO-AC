@@ -21,11 +21,12 @@ class IndexView(LoginRequiredMixin, View):
 
 class TodoActionView(LoginRequiredMixin, View):
     def post(self, request, todo_id, action):
-        todo = Todo.objects.filter(id=todo_id, user = request.user).filter()
+        todo = Todo.objects.filter(id=todo_id, user=request.user).first()
         if todo:
             if action == "done":
                 todo.done = True
                 todo.save()
             elif action == "delete":
                 todo.delete()
+                
         return redirect("index")
